@@ -20,22 +20,27 @@ class Images
 	//вывод списка изображений
 	public function print($width)
 	{
-		foreach ($this->images as $key => $value) {
-			if(trim($value['tag'], "'") != ""){
-				printf('<div><div>
-					Тег:<a href="index.php?tag=%s">%s</a>
-				</div>', $value['tag'],  $value['tag']);
-			}
+		if ($this->images == null) {
+			echo "База данных изображений пуста";
+		}
+		else{
+			foreach ($this->images as $key => $value) {
+				if(trim($value['tag'], "'") != ""){
+					printf('<div><div>
+						Тег:<a href="index.php?tag=%s">%s</a>
+					</div>', $value['tag'],  $value['tag']);
+				}
 
-			printf('Просмотров - %s<br>
-				<div>
-				<a href="index.php?id=%s"><img src="%s" alt="%s" title="%s" width="%s"></a>
-			</div><br>', $value['countView'], $value['id'], $value['image'], $value['tag'],  $value['tag'], $width);
+				printf('Просмотров - %s<br>
+					<div>
+					<a href="index.php?id=%s"><img src="%s" alt="%s" title="%s" width="%s"></a>
+				</div><br>', $value['countView'], $value['id'], $value['image'], $value['tag'],  $value['tag'], $width);
 
-			if ($this->idUser == $value['idUser']) {
-				printf('<div>
-				<a href="index.php?deleteId=%s">Удалить</a>
-			</div></div><br><br>',$value['id']);
+				if ($this->idUser == $value['idUser']) {
+					printf('<div>
+					<a href="index.php?deleteId=%s">Удалить</a>
+				</div></div><br><br>',$value['id']);
+				}
 			}
 		}
 	}
@@ -43,36 +48,42 @@ class Images
 	//вывод одного изображения
 	public function printOneImage($width)
 	{
-
-		if(trim($this->images[0]['tag'], "'") != ""){
-			printf('<div>
-				Тег:<a href="index.php?tag=%s">%s</a>
-			</div>', $this->images[0]['tag'],  $this->images[0]['tag']);
+		if ($this->images == null) {
+			echo "База данных изображений пуста";
 		}
-
-		printf('Просмотров - %s<br>
-			<div>
-			<a href="index.php?id=%s"><img src="%s" alt="%s" title="%s" width="%s"></a>
-		</div><br><br>', $this->images[0]['countView'], $this->images[0]['id'], $this->images[0]['image'], $this->images[0]['tag'],  $this->images[0]['tag'], $width);
-
-		$this->countView($this->images[0]['id'], $this->images[0]['countView']);
-
-		if ($this->idUser == $this->images[0]['idUser']) {
+		else{
+			if(trim($this->images[0]['tag'], "'") != ""){
 				printf('<div>
-				<a href="index.php?deleteId=%s">Удалить</a>
-			</div><br><br>', $this->images[0]['id']);
+					Тег:<a href="index.php?tag=%s">%s</a>
+				</div>', $this->images[0]['tag'],  $this->images[0]['tag']);
+			}
+
+			printf('Просмотров - %s<br>
+				<div>
+				<a href="index.php?id=%s"><img src="%s" alt="%s" title="%s" width="%s"></a>
+			</div><br><br>', $this->images[0]['countView'], $this->images[0]['id'], $this->images[0]['image'], $this->images[0]['tag'],  $this->images[0]['tag'], $width);
+
+			$this->countView($this->images[0]['id'], $this->images[0]['countView']);
+
+			if ($this->idUser == $this->images[0]['idUser']) {
+					printf('<div>
+					<a href="index.php?deleteId=%s">Удалить</a>
+				</div><br><br>', $this->images[0]['id']);
+			}
 		}
 	}
 
 	//вывод фильтра тэгов изображений
 	public function printTag()
 	{
-		print("Фильтер по тегам:");
-		foreach (array_unique(array_column($this->images, 'tag')) as $key=>$value) {
-			if(trim($value, "'") != ""){
-				printf('<div>
-					<a href="index.php?tag=%s">%s</a>
-				</div>', $value,  $value);
+		if ($this->images != null) {
+			print("Фильтер по тегам:");
+			foreach (array_unique(array_column($this->images, 'tag')) as $key=>$value) {
+				if(trim($value, "'") != ""){
+					printf('<div>
+						<a href="index.php?tag=%s">%s</a>
+					</div>', $value,  $value);
+				}
 			}
 		}
 	}
