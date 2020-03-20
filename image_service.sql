@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `image` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
   `date_reg` date DEFAULT NULL,
   `idUser` int(11) NOT NULL,
   `countView` int(11) DEFAULT '0',
@@ -44,7 +44,7 @@ CREATE TABLE `image` (
 --
 
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
   `name` varchar(100) DEFAULT NULL,
   `nameFull` varchar(255) NOT NULL,
   `password` varchar(50) NOT NULL,
@@ -59,14 +59,7 @@ CREATE TABLE `user` (
 -- Индексы таблицы `image`
 --
 ALTER TABLE `image`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `idUser` (`idUser`);
-
---
--- Индексы таблицы `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
